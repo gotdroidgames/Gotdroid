@@ -1,14 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ItemPick : MonoBehaviour
 {
     Camera camera;
     public List<GameObject> pickUpItem = new List<GameObject>();
+    public List<string> itemStr = new List<string>();
+    public List<TextMeshProUGUI> itemTxt = new List<TextMeshProUGUI>();
+    public Animator itemPickAnimator;
     private void Start()
     {
         camera = Camera.main;
+        itemPickAnimator = gameObject.GetComponent<Animator>();
+        for (int i = 0; i < pickUpItem.Count; i++)
+        {
+            itemStr.Add(pickUpItem[i].name);
+            itemTxt[i].text = itemStr[i];
+        }
     }
 
     private void Update()
@@ -21,11 +31,25 @@ public class ItemPick : MonoBehaviour
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray,out hit,100) && pickUpItem.Contains(hit.transform.gameObject))
+            if (Physics.Raycast(ray, out hit, 100) && pickUpItem.Contains(hit.transform.gameObject))
             {
-                Debug.Log(hit.transform.name);
+                //itemPickAnimator.SetBool("itemPickUp", true);                
+                StartCoroutine(objectfalse());
+                Destroy(hit.transform.gameObject);
+            }
+            else
+            {
+                
             }
         }
+       
+
+    }
+
+    IEnumerator objectfalse()
+    {
+        yield return new WaitForSeconds(1.5f);
+       // itemPickAnimator.SetBool("itemPickUp", false);
     }
 
 }
