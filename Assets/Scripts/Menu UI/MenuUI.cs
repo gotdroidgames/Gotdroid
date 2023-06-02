@@ -37,7 +37,6 @@ public class MenuUI : MonoBehaviour
         menuUIButtons[1].SetActive(false);
         menuUIButtons[2].SetActive(false);
         menuUIButtons[3].SetActive(true);
-       // menuUIButtons[4].SetActive(true);
         VolumeSlider.gameObject.SetActive(true);
         SFXSlider.gameObject.SetActive(true);
     }
@@ -53,7 +52,6 @@ public class MenuUI : MonoBehaviour
         menuUIButtons[1].SetActive(true);
         menuUIButtons[2].SetActive(true);
         menuUIButtons[3].SetActive(false);
-        //menuUIButtons[4].SetActive(false);
         VolumeSlider.gameObject.SetActive(false);
         SFXSlider.gameObject.SetActive(false);
     }
