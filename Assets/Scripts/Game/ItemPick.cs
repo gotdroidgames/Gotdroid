@@ -35,21 +35,25 @@ public class ItemPick : MonoBehaviour
             {
                 //itemPickAnimator.SetBool("itemPickUp", true);                
                 StartCoroutine(objectfalse());
+                for (int i = 0; i < itemStr.Count; i++)
+                {
+                    if (itemTxt[i].text.Contains(hit.transform.gameObject.name))
+                    {
+                        itemTxt[i].GetComponent<TextMeshProUGUI>().color = Color.green;
+                    }
+                }
                 Destroy(hit.transform.gameObject);
             }
-            else
-            {
-                
-            }
+
         }
-       
+
 
     }
 
     IEnumerator objectfalse()
     {
         yield return new WaitForSeconds(1.5f);
-       // itemPickAnimator.SetBool("itemPickUp", false);
+        // itemPickAnimator.SetBool("itemPickUp", false);
     }
 
 }
