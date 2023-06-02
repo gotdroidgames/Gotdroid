@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 
 public class MenuUI : MonoBehaviour
 {
+    public Slider VolumeSlider;
+    public Slider SFXSlider;
     public GameObject[] menuUIButtons = new GameObject[3];
+    
 
     void MEnuUIButtons(GameObject optionButton, GameObject playButton, GameObject quitButton, GameObject backGround, GameObject backButton, GameObject yesButton, GameObject noButton)
 
@@ -21,7 +26,9 @@ public class MenuUI : MonoBehaviour
 
     private void Start()
     {
-        menuUIButtons[4].SetActive(false);
+        menuUIButtons[3].SetActive(false);
+        VolumeSlider.gameObject.SetActive(false);
+        SFXSlider.gameObject.SetActive(false);
     }
 
     public void Options()
@@ -30,7 +37,9 @@ public class MenuUI : MonoBehaviour
         menuUIButtons[1].SetActive(false);
         menuUIButtons[2].SetActive(false);
         menuUIButtons[3].SetActive(true);
-        menuUIButtons[4].SetActive(true);
+       // menuUIButtons[4].SetActive(true);
+        VolumeSlider.gameObject.SetActive(true);
+        SFXSlider.gameObject.SetActive(true);
     }
 
     public void Play()
@@ -43,7 +52,10 @@ public class MenuUI : MonoBehaviour
         menuUIButtons[0].SetActive(true);
         menuUIButtons[1].SetActive(true);
         menuUIButtons[2].SetActive(true);
-        menuUIButtons[4].SetActive(false);
+        menuUIButtons[3].SetActive(false);
+        //menuUIButtons[4].SetActive(false);
+        VolumeSlider.gameObject.SetActive(false);
+        SFXSlider.gameObject.SetActive(false);
     }
 
     public void QuitMenu()
