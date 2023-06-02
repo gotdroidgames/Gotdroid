@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8f8c0a01436fe4098a428b37e21b27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingTime: 10
+  startingTime: 500
   countDownText: {fileID: 88901206}
 --- !u!4 &379757754
 Transform:
@@ -573,9 +573,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 913724152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 509c5308a3502414388e15821ef0e878, type: 3}
+  m_Script: {fileID: 11500000, guid: 85f146f61cf649c4b9b2fcdc39a81909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickUpItem: []
 --- !u!1 &1455424662 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5404618662806182140, guid: b7773dc95d749ea4a851e314122c2588, type: 3}
@@ -593,6 +594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85f146f61cf649c4b9b2fcdc39a81909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickUpItem: []
 --- !u!1 &1508612177
 GameObject:
   m_ObjectHideFlags: 0
