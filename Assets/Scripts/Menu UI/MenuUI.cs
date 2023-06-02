@@ -43,7 +43,6 @@ public class MenuUI : MonoBehaviour
         menuUIButtons[0].SetActive(true);
         menuUIButtons[1].SetActive(true);
         menuUIButtons[2].SetActive(true);
-        menuUIButtons[3].SetActive(false);
         menuUIButtons[4].SetActive(false);
     }
 
