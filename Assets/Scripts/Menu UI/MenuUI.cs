@@ -42,9 +42,9 @@ public class MenuUI : MonoBehaviour
         SFXSlider.gameObject.SetActive(true);
     }
 
-    public void Play()
+    public void Play(string ID)
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene(ID);
     }
 
     public void Back()
