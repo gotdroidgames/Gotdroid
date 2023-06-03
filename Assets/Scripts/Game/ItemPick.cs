@@ -13,7 +13,10 @@ public class ItemPick : MonoBehaviour
     public Animator itemPickAnimator;
     public Sprite trueAssets, falseAssets;
     public GameObject garajeDoor;
-   
+    public GameObject rotationObject;
+    public GameObject rotationTwo;
+    public List<GameObject> doorObject = new List<GameObject>();
+
     private void Start()
     {
         camera = Camera.main;
@@ -27,45 +30,60 @@ public class ItemPick : MonoBehaviour
 
     private void Update()
     {
-        
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = 100f;
-            mousePos = camera.ScreenToWorldPoint(mousePos);
-            if (Input.GetKeyDown("f"))
+
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 100f;
+        mousePos = camera.ScreenToWorldPoint(mousePos);
+        if (Input.GetKeyDown("f"))
+        {
+            itemPickAnimator.SetBool("itemPickUp", true);
+            StartCoroutine(objectfalse());
+
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100) && pickUpItem.Contains(hit.transform.gameObject))
             {
-                itemPickAnimator.SetBool("itemPickUp", true);
-                StartCoroutine(objectfalse());
 
-                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 100) && pickUpItem.Contains(hit.transform.gameObject))
+
+                for (int i = 0; i < itemStr.Count; i++)
                 {
-
-
-
-                    for (int i = 0; i < itemStr.Count; i++)
+                    if (itemTxt[i].text.Contains(hit.transform.gameObject.name))
                     {
-                        if (itemTxt[i].text.Contains(hit.transform.gameObject.name))
-                        {
-                            itemTxt[i].GetComponent<TextMeshProUGUI>().color = Color.green;
-                            itemTxt[i].GetComponent<ID>().correctItem.sprite = trueAssets;
-                            itemTxt[i].GetComponent<ID>().correctItem.color = Color.green;
-                        }
+                        itemTxt[i].GetComponent<TextMeshProUGUI>().color = Color.green;
+                        itemTxt[i].GetComponent<ID>().correctItem.sprite = trueAssets;
+                        itemTxt[i].GetComponent<ID>().correctItem.color = Color.green;
                     }
-                    Destroy(hit.transform.gameObject);
                 }
-                if (hit.transform.gameObject.tag == "ButtonGaraje")
+                Destroy(hit.transform.gameObject);
+            }
+            if (hit.transform.gameObject.tag == "ButtonGaraje")
+            {
+                Debug.Log("++");
+                garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 4.7f, garajeDoor.transform.position.z), .5f);
+            }
+            if (hit.transform.gameObject.tag == "door")
+            {
+                if (!doorObject.Contains(hit.collider.gameObject))
                 {
-                    Debug.Log("++");
-                    garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 4.7f, garajeDoor.transform.position.z), .5f);
+                    hit.collider.gameObject.GetComponent<Transform>().rotation = rotationObject.GetComponent<Transform>().rotation;
+                    doorObject.Add(hit.collider.gameObject);
                 }
-
+                else
+                {
+                    hit.collider.gameObject.GetComponent<Transform>().rotation = rotationTwo.GetComponent<Transform>().rotation;
+                    doorObject.Remove(hit.collider.gameObject);
+                }
 
             }
-        
-       
-        
+
+
+
+        }
+
+
+
     }
 
     IEnumerator objectfalse()
