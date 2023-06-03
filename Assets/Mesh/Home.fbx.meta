@@ -17,6 +17,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Cam
+    second: {fileID: 2100000, guid: 605fc32591a0bdd45bc448323bc6e66f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EvDis
+    second: {fileID: 2100000, guid: bba214f7d2f1b96468d67c6ebf992aa4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Floor
     second: {fileID: 2100000, guid: 85dd0cf9f6ebf8f4f930ce5d8bcb859a, type: 2}
   - first:
@@ -37,8 +47,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Light
+    second: {fileID: 2100000, guid: 2b53f393d68af814686b8fa9ef89e5ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 2b53f393d68af814686b8fa9ef89e5ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: bathroomFloor
     second: {fileID: 2100000, guid: 9bf9191d7f6c1434d894bce4d19867d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: grass
+    second: {fileID: 2100000, guid: 945a420b802fc33419d7da6bae31403b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
