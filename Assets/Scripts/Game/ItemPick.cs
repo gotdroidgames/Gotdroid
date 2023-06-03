@@ -15,6 +15,25 @@ public class ItemPick : MonoBehaviour
     public GameObject rotationObject;
     public GameObject rotationTwo;
     public List<GameObject> doorObject = new List<GameObject>();
+    public  bool isCar;
+    public static ItemPick Instance;
+    public GameObject playerCamera, carCamera;
+    public GameObject player;
+    public int inventoryItem;
+    public TextMeshProUGUI infoText;
+    public AudioSource itemTakeSound,doorSound,carSound;
+    public GameObject itemListGo;
+   
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+       
+    }
+
 
     private void Start()
     {
@@ -29,57 +48,94 @@ public class ItemPick : MonoBehaviour
 
     private void Update()
     {
-
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 100f;
-        mousePos = camera.ScreenToWorldPoint(mousePos);
-        if (Input.GetKeyDown("f"))
+        if (SinematicCam.Instance.isPlay == true)
         {
-            itemPickAnimator.SetBool("itemPickUp", true);
-            StartCoroutine(objectfalse());
-
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100) && pickUpItem.Contains(hit.transform.gameObject))
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = 100f;
+            mousePos = camera.ScreenToWorldPoint(mousePos);
+            if (Input.GetKeyDown("f"))
             {
-                for (int i = 0; i < itemStr.Count; i++)
+                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 2) && pickUpItem.Contains(hit.transform.gameObject))
                 {
-                    if (itemTxt[i].text.Contains(hit.transform.gameObject.name))
+                    itemPickAnimator.SetBool("itemPickUp", true);
+                    StartCoroutine(objectfalse());
+                    itemTakeSound.Play();
+                    for (int i = 0; i < itemStr.Count; i++)
                     {
-                        itemTxt[i].GetComponent<TextMeshProUGUI>().color = Color.green;
-                        itemTxt[i].GetComponent<ID>().correctItem.sprite = trueAssets;
-                        itemTxt[i].GetComponent<ID>().correctItem.color = Color.green;
+                        if (itemTxt[i].text.Contains(hit.transform.gameObject.name))
+                        {
+                            itemTxt[i].GetComponent<TextMeshProUGUI>().color = Color.green;
+                            itemTxt[i].GetComponent<ID>().correctItem.sprite = trueAssets;
+                            itemTxt[i].GetComponent<ID>().correctItem.color = Color.green;
+                        }
+                    }
+                    Destroy(hit.transform.gameObject);
+                    inventoryItem++;
+                }
+                if (hit.transform.gameObject.tag == "ButtonGaraje")
+                {
+                    Debug.Log("++");
+                    garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 7.3f, garajeDoor.transform.position.z), 2f);
+                }
+                if (hit.transform.gameObject.tag == "door")
+                {
+                    doorSound.Play();
+                    if (!doorObject.Contains(hit.collider.gameObject))
+                    {
+                        hit.collider.gameObject.GetComponent<Transform>().rotation = rotationObject.GetComponent<Transform>().rotation;
+                        doorObject.Add(hit.collider.gameObject);
+                    }
+                    else
+                    {
+                        hit.collider.gameObject.GetComponent<Transform>().rotation = rotationTwo.GetComponent<Transform>().rotation;
+                        doorObject.Remove(hit.collider.gameObject);
                     }
                 }
-                Destroy(hit.transform.gameObject);
-            }
-            if (hit.transform.gameObject.tag == "ButtonGaraje")
-            {
-                Debug.Log("++");
-                garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 7.3f, garajeDoor.transform.position.z), .5f);
-            }
-            if (hit.transform.gameObject.tag == "door")
-            {
-                if (!doorObject.Contains(hit.collider.gameObject))
+                if (hit.transform.gameObject.tag == "garajeDoor")
                 {
-                    hit.collider.gameObject.GetComponent<Transform>().rotation = rotationObject.GetComponent<Transform>().rotation;
-                    doorObject.Add(hit.collider.gameObject);
+                    if (inventoryItem == 6)
+                    {
+                        itemListGo.SetActive(false);
+                        doorSound.Play();
+                        if (!doorObject.Contains(hit.collider.gameObject))
+                        {
+                            hit.collider.gameObject.GetComponent<Transform>().rotation = rotationObject.GetComponent<Transform>().rotation;
+                            doorObject.Add(hit.collider.gameObject);
+                        }
+                        else
+                        {
+                            hit.collider.gameObject.GetComponent<Transform>().rotation = rotationTwo.GetComponent<Transform>().rotation;
+                            doorObject.Remove(hit.collider.gameObject);
+                        }
+                    }
+                    else
+                    {
+                        infoText.text = "Etrafta ki malzemeleri topla!";
+                        StartCoroutine(backInfo());
+                    }
                 }
-                else
+                if (hit.transform.gameObject.tag == "carDoor")
                 {
-                    hit.collider.gameObject.GetComponent<Transform>().rotation = rotationTwo.GetComponent<Transform>().rotation;
-                    doorObject.Remove(hit.collider.gameObject);
+                    carSound.loop = true;
+                    carSound.Play();
+                    isCar = true;
+                    Debug.Log("arabaya bindi");
+                    playerCamera.SetActive(false);
+                    gameObject.SetActive(false);
+                    carCamera.SetActive(true);
                 }
-
             }
-
-
-
         }
+       
+    }
 
-
-
+    IEnumerator backInfo()
+    {
+        yield return new WaitForSeconds(3);
+        infoText.text = "";
     }
 
     IEnumerator objectfalse()

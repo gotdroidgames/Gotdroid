@@ -8,6 +8,8 @@ TagManager:
   - canPickUp
   - ButtonGaraje
   - door
+  - carDoor
+  - garajeDoor
   layers:
   - Default
   - TransparentFX

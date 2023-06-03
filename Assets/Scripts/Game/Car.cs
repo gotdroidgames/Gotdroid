@@ -22,10 +22,14 @@ public class Car : MonoBehaviour
 
     private void FixedUpdate()
     {
-        GetInput();
-        HandleMotor();
-        HandleSteering();
-        UpdateWheels();
+        if (ItemPick.Instance.isCar == true)
+        {
+            GetInput();
+            HandleMotor();
+            HandleSteering();
+            UpdateWheels();
+        }
+       
     }
 
     private void GetInput()
