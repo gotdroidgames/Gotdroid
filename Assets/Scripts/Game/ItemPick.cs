@@ -10,6 +10,8 @@ public class ItemPick : MonoBehaviour
     public List<string> itemStr = new List<string>();
     public List<TextMeshProUGUI> itemTxt = new List<TextMeshProUGUI>();
     public Animator itemPickAnimator;
+    public Sprite trueAssets, falseAssets;
+   
     private void Start()
     {
         camera = Camera.main;
@@ -28,32 +30,38 @@ public class ItemPick : MonoBehaviour
         mousePos = camera.ScreenToWorldPoint(mousePos);
         if (Input.GetKeyDown("f"))
         {
+            itemPickAnimator.SetBool("itemPickUp", true);
+            StartCoroutine(objectfalse());
+
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 100) && pickUpItem.Contains(hit.transform.gameObject))
             {
-                //itemPickAnimator.SetBool("itemPickUp", true);
-                StartCoroutine(objectfalse());
+                
+               
+
                 for (int i = 0; i < itemStr.Count; i++)
                 {
                     if (itemTxt[i].text.Contains(hit.transform.gameObject.name))
                     {
                         itemTxt[i].GetComponent<TextMeshProUGUI>().color = Color.green;
+                        itemTxt[i].GetComponent<ID>().correctItem.sprite = trueAssets;
+                        itemTxt[i].GetComponent<ID>().correctItem.color = Color.green;
                     }
                 }
                 Destroy(hit.transform.gameObject);
             }
+           
 
         }
-
-
+        
     }
 
     IEnumerator objectfalse()
     {
         yield return new WaitForSeconds(1.5f);
-        // itemPickAnimator.SetBool("itemPickUp", false);
+        itemPickAnimator.SetBool("itemPickUp", false);
     }
 
 }
