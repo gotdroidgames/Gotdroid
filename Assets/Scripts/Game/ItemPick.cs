@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class ItemPick : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ItemPick : MonoBehaviour
     public List<TextMeshProUGUI> itemTxt = new List<TextMeshProUGUI>();
     public Animator itemPickAnimator;
     public Sprite trueAssets, falseAssets;
+    public GameObject garajeDoor;
    
     private void Start()
     {
@@ -25,8 +27,7 @@ public class ItemPick : MonoBehaviour
 
     private void Update()
     {
-        if (SinematicCam.Instance.isPlay == true)
-        {
+        
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 100f;
             mousePos = camera.ScreenToWorldPoint(mousePos);
@@ -54,10 +55,15 @@ public class ItemPick : MonoBehaviour
                     }
                     Destroy(hit.transform.gameObject);
                 }
+                if (hit.transform.gameObject.tag == "ButtonGaraje")
+                {
+                    Debug.Log("++");
+                    garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 4.7f, garajeDoor.transform.position.z), .5f);
+                }
 
 
             }
-        }
+        
        
         
     }

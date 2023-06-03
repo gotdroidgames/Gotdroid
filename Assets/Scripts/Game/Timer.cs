@@ -16,7 +16,7 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
-        if (SinematicCam.Instance.isPlay == true)
+      /*  if (SinematicCam.Instance.isPlay == true)
         {
             currentTime -= 1 * Time.deltaTime;
             countDownText.text = currentTime.ToString("0");
@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour
             {
                 currentTime = 0;
             }
-        }
+        }*/
         
     }
 }
