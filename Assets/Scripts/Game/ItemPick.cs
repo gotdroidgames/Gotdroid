@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
-
 public class ItemPick : MonoBehaviour
 {
     Camera camera;
@@ -44,9 +43,6 @@ public class ItemPick : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, 100) && pickUpItem.Contains(hit.transform.gameObject))
             {
-
-
-
                 for (int i = 0; i < itemStr.Count; i++)
                 {
                     if (itemTxt[i].text.Contains(hit.transform.gameObject.name))
@@ -61,7 +57,7 @@ public class ItemPick : MonoBehaviour
             if (hit.transform.gameObject.tag == "ButtonGaraje")
             {
                 Debug.Log("++");
-                garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 4.7f, garajeDoor.transform.position.z), .5f);
+                garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 7.3f, garajeDoor.transform.position.z), .5f);
             }
             if (hit.transform.gameObject.tag == "door")
             {
