@@ -75,11 +75,7 @@ public class ItemPick : MonoBehaviour
                     Destroy(hit.transform.gameObject);
                     inventoryItem++;
                 }
-                if (hit.transform.gameObject.tag == "ButtonGaraje")
-                {
-                    Debug.Log("++");
-                    garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 7.3f, garajeDoor.transform.position.z), 2f);
-                }
+                
                 if (hit.transform.gameObject.tag == "door")
                 {
                     doorSound.Play();
@@ -127,8 +123,15 @@ public class ItemPick : MonoBehaviour
                     gameObject.SetActive(false);
                     carCamera.SetActive(true);
                 }
+
+                if (hit.transform.gameObject.tag == "ButtonGaraje")
+                {
+                    Debug.Log("++");
+                    garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 7.3f, garajeDoor.transform.position.z), 2f);
+                }
             }
         }
+
        
     }
 
