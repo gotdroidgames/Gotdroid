@@ -19,7 +19,7 @@ public class SinematicCam : MonoBehaviour
     }
     void Update()
     {
-        if (gameObject.transform.position == new Vector3(3.68f, 2.9f, -12.9f))
+        if (gameObject.transform.position == new Vector3(-10.68f, 8.3f, -33.4f))
         {
             gameObject.SetActive(false);
             Debug.Log("+");
