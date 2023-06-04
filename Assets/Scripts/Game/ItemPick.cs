@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 public class ItemPick : MonoBehaviour
 {
     Camera camera;
+    public Camera cameraCar;
     public List<GameObject> pickUpItem = new List<GameObject>();
     public List<string> itemStr = new List<string>();
     public List<TextMeshProUGUI> itemTxt = new List<TextMeshProUGUI>();
@@ -15,15 +17,17 @@ public class ItemPick : MonoBehaviour
     public GameObject rotationObject;
     public GameObject rotationTwo;
     public List<GameObject> doorObject = new List<GameObject>();
-    public  bool isCar;
+    public bool isCar;
     public static ItemPick Instance;
     public GameObject playerCamera, carCamera;
     public GameObject player;
     public int inventoryItem;
     public TextMeshProUGUI infoText;
-    public AudioSource itemTakeSound,doorSound,carSound;
+    public AudioSource itemTakeSound, doorSound, carSound;
     public GameObject itemListGo;
-   
+    public TextMeshProUGUI item;
+    public GameObject deadPanel,winPanel;
+
 
     private void Awake()
     {
@@ -31,12 +35,13 @@ public class ItemPick : MonoBehaviour
         {
             Instance = this;
         }
-       
+
     }
 
 
     private void Start()
     {
+       
         camera = Camera.main;
         itemPickAnimator = gameObject.GetComponent<Animator>();
         for (int i = 0; i < pickUpItem.Count; i++)
@@ -46,10 +51,16 @@ public class ItemPick : MonoBehaviour
         }
     }
 
+    public void AgainGame(int scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
+
     private void Update()
     {
         if (SinematicCam.Instance.isPlay == true)
         {
+           
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 100f;
             mousePos = camera.ScreenToWorldPoint(mousePos);
@@ -58,7 +69,7 @@ public class ItemPick : MonoBehaviour
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 2) && pickUpItem.Contains(hit.transform.gameObject))
+                if (Physics.Raycast(ray, out hit, 4) && pickUpItem.Contains(hit.transform.gameObject))
                 {
                     itemPickAnimator.SetBool("itemPickUp", true);
                     StartCoroutine(objectfalse());
@@ -75,8 +86,8 @@ public class ItemPick : MonoBehaviour
                     Destroy(hit.transform.gameObject);
                     inventoryItem++;
                 }
-                
-                if (hit.transform.gameObject.tag == "door")
+
+                else if (hit.transform.gameObject.tag == "door")
                 {
                     doorSound.Play();
                     if (!doorObject.Contains(hit.collider.gameObject))
@@ -90,10 +101,12 @@ public class ItemPick : MonoBehaviour
                         doorObject.Remove(hit.collider.gameObject);
                     }
                 }
-                if (hit.transform.gameObject.tag == "garajeDoor")
+                else if (hit.transform.gameObject.tag == "garajeDoor")
                 {
                     if (inventoryItem == 6)
                     {
+                        infoText.text = "Garaj Butonuna Bas!";
+                        StartCoroutine(backInfo());
                         itemListGo.SetActive(false);
                         doorSound.Play();
                         if (!doorObject.Contains(hit.collider.gameObject))
@@ -113,8 +126,9 @@ public class ItemPick : MonoBehaviour
                         StartCoroutine(backInfo());
                     }
                 }
-                if (hit.transform.gameObject.tag == "carDoor")
+                else if (hit.transform.gameObject.tag == "carDoor")
                 {
+                    item.gameObject.SetActive(true);
                     carSound.loop = true;
                     carSound.Play();
                     isCar = true;
@@ -124,7 +138,7 @@ public class ItemPick : MonoBehaviour
                     carCamera.SetActive(true);
                 }
 
-                if (hit.transform.gameObject.tag == "ButtonGaraje")
+                else if (hit.transform.gameObject.tag == "ButtonGaraje")
                 {
                     Debug.Log("++");
                     garajeDoor.GetComponent<Transform>().DOMove(new Vector3(garajeDoor.transform.position.x, 7.3f, garajeDoor.transform.position.z), 2f);
@@ -132,7 +146,7 @@ public class ItemPick : MonoBehaviour
             }
         }
 
-       
+
     }
 
     IEnumerator backInfo()
